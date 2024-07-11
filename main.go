@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ecowitt-to-influxdb/internal/ecowitt-to-influxdb/ecowitt"
-	"ecowitt-to-influxdb/internal/ecowitt-to-influxdb/influx"
+	"ecowitt-to-influxdb/internal/ecowitt"
+	"ecowitt-to-influxdb/internal/influx"
 	"fmt"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"io/ioutil"
@@ -30,7 +30,6 @@ func (h Handler) postHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprintf(w, "Received POST request with body: %s\n", string(body))
-	log.Printf("Received POST request with body: %s\n", string(body))
 	params, err := url.ParseQuery(string(body))
 	if err != nil {
 		http.Error(w, "Error parsing body", http.StatusBadRequest)
@@ -39,13 +38,11 @@ func (h Handler) postHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	readingMap := ecowitt.BuildReadingMap(params)
 
-	printReadingMap(readingMap)
 	reading, err := ecowitt.BuildReading(readingMap)
 	if err != nil {
 		http.Error(w, "Error parsing body", http.StatusBadRequest)
 		log.Printf("Invalid request, unable to parse body into reading struct")
 	}
-	log.Printf("parsed results: %+v", reading)
 	writeApi := h.InfluxClient.WriteAPI(h.InfluxConfig.Org, h.InfluxConfig.Bucket)
 	p := influxdb2.NewPoint("local_weather",
 		map[string]string{
