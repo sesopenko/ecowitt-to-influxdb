@@ -21,7 +21,7 @@ type InfluxMeasurement struct {
 func GetInfluxConfig() InfluxConfig {
 	c := InfluxConfig{
 		Url:             os.Getenv("ETOI_INFLUX_URL"),
-		AuthToken:       os.Getenv("ETOI_AUTH_TOKENL"),
+		AuthToken:       os.Getenv("ETOI_AUTH_TOKEN"),
 		Org:             os.Getenv("ETOI_ORG"),
 		Bucket:          os.Getenv("ETOI_BUCKET"),
 		CountryProvCity: os.Getenv("ETOI_COUNTRY_PROV_CITY"),
