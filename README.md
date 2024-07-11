@@ -50,6 +50,20 @@ _measurement: local_weather
 Barrometric pressure relative doesn't seem to work properly for me because I don't think my ecowitt gateway calculates
 it when sending it. You'll have to look up how to calculate relative with an influxdb map.
 
+## Running with Docker
+
+```bash
+docker run -d \
+  --name ecowitt-influxdb \
+  -e ETOI_INFLUX_URL="https://your-influx-url.com" \
+  -e ETOI_AUTH_TOKEN="your-auth-token" \
+  -e ETOI_ORG="your-org" \
+  -e ETOI_BUCKET="your-bucket" \
+  -e ETOI_COUNTRY_PROV_CITY="CA-AB:Medicine Hat" \
+  sesopenko/ecowitt-to-influxdb:latest
+
+```
+
 ## Equipment I'm using
 
 * Ecowitt GW1200 Wireless Gateway and internal sensor
